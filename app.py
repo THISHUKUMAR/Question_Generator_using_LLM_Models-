@@ -1,31 +1,34 @@
-import os
-os.environ["STREAMLIT_WATCHER_TYPE"] = "poll"
 import streamlit as st
-from backend import file_processing, llm_pipeline
-from io import BytesIO
+import os
+from backend import generate_questions_from_pdf  # or whatever your function is
 
-st.set_page_config(page_title="📄 PDF to Q&A Generator")
-
+st.set_page_config(page_title="PDF Q&A Generator", layout="wide")
 st.title("📄 PDF to Q&A Generator")
-uploaded_file = st.file_uploader("Upload a PDF", type="pdf")
+
+uploaded_file = st.file_uploader("Upload your PDF", type="pdf")
 
 if uploaded_file:
-    with st.spinner("Reading PDF..."):
-        with open(f"temp/{uploaded_file.name}", "wb") as f:
-            f.write(uploaded_file.getbuffer())
-        data = file_processing(f"temp/{uploaded_file.name}")
-        st.success("PDF successfully processed!")
+    # ✅ Ensure 'temp' directory exists
+    if not os.path.exists("temp"):
+        os.makedirs("temp")
 
-    with st.spinner("Generating questions and answers..."):
-        result_text = llm_pipeline(data)
-        st.success("Q&A generation complete!")
-        st.text_area("Generated Q&A", result_text, height=400)
+    # ✅ Save the uploaded file into the temp directory
+    with open(f"temp/{uploaded_file.name}", "wb") as f:
+        f.write(uploaded_file.getbuffer())
 
-        # Option to download Q&A
-        def create_download():
-            buffer = BytesIO()
-            buffer.write(result_text.encode())
-            buffer.seek(0)
-            return buffer
+    st.success("PDF uploaded successfully!")
 
-        st.download_button("Download Q&A", create_download(), file_name="QA_output.txt")
+    if st.button("Generate Questions"):
+        with st.spinner("Generating questions..."):
+            qa_pairs = generate_questions_from_pdf(f"temp/{uploaded_file.name}")
+            
+            if qa_pairs:
+                for i, (q, a) in enumerate(qa_pairs, start=1):
+                    st.markdown(f"**Q{i}:** {q}")
+                    st.markdown(f"**A{i}:** {a}")
+                    st.markdown("---")
+            else:
+                st.warning("No questions generated. Please check the content of your PDF.")
+
+        # ✅ Optional: Remove the file after processing
+        os.remove(f"temp/{uploaded_file.name}")
