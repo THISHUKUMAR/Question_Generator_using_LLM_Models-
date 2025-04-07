@@ -8,6 +8,7 @@ def file_processing(file_path):
 
 
 import re
+import streamlit as st
 from langchain.chains.question_answering import load_qa_chain
 from langchain_google_genai import ChatGoogleGenerativeAI
 
@@ -15,7 +16,8 @@ def llm_pipeline(data):
     import os
     from dotenv import load_dotenv
     load_dotenv()
-    API_KEY = os.getenv("GEMINI_API_KEY")
+    # API_KEY = os.getenv("GEMINI_API_KEY")
+    API_KEY = st.secrets["GOOGLE_API_KEY"]
     llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", google_api_key=API_KEY)
     chain = load_qa_chain(llm, chain_type="stuff")
 
