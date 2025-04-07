@@ -1,6 +1,7 @@
 streamlit==1.32.2
 langchain==0.1.13
-langchain-community==0.0.28
+langchain-community==0.0.29  # or higher, but <0.1
+pypdf                        # <- Required by PyPDFLoader
 PyPDF2==3.0.1
 pdfminer.six==20231228
 openai==1.14.3
