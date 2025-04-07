@@ -1,34 +1,43 @@
 import streamlit as st
 import os
-from backend import generate_questions_from_pdf  # or whatever your function is
+from backend import file_processing, llm_pipeline
 
-st.set_page_config(page_title="PDF Q&A Generator", layout="wide")
-st.title("📄 PDF to Q&A Generator")
+# Set page configuration
+st.set_page_config(page_title="PDF Q&A Generator", layout="centered")
 
-uploaded_file = st.file_uploader("Upload your PDF", type="pdf")
+# App title
+st.title("📄 PDF Question Generator using Gemini")
 
+# File uploader
+uploaded_file = st.file_uploader("Upload a PDF file", type=["pdf"])
+
+# Create temp directory if it doesn't exist
 if uploaded_file:
-    # ✅ Ensure 'temp' directory exists
-    if not os.path.exists("temp"):
-        os.makedirs("temp")
+    os.makedirs("temp", exist_ok=True)
 
-    # ✅ Save the uploaded file into the temp directory
-    with open(f"temp/{uploaded_file.name}", "wb") as f:
+    # Save the uploaded file
+    file_path = os.path.join("temp", uploaded_file.name)
+    with open(file_path, "wb") as f:
         f.write(uploaded_file.getbuffer())
 
-    st.success("PDF uploaded successfully!")
+    # Process the file and generate questions
+    with st.spinner("Processing and generating questions..."):
+        try:
+            data = file_processing(file_path)
+            output = llm_pipeline(data)
+            st.success("✅ Done!")
 
-    if st.button("Generate Questions"):
-        with st.spinner("Generating questions..."):
-            qa_pairs = generate_questions_from_pdf(f"temp/{uploaded_file.name}")
-            
-            if qa_pairs:
-                for i, (q, a) in enumerate(qa_pairs, start=1):
-                    st.markdown(f"**Q{i}:** {q}")
-                    st.markdown(f"**A{i}:** {a}")
-                    st.markdown("---")
-            else:
-                st.warning("No questions generated. Please check the content of your PDF.")
+            # Display results
+            st.markdown("### 📌 Generated Questions and Answers")
+            st.text_area("Output", output, height=400)
 
-        # ✅ Optional: Remove the file after processing
-        os.remove(f"temp/{uploaded_file.name}")
+            # Download button
+            st.download_button(
+                label="📥 Download Q&A as TXT",
+                data=output,
+                file_name="generated_questions.txt",
+                mime="text/plain"
+            )
+
+        except Exception as e:
+            st.error(f"❌ An error occurred: {e}")
