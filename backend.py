@@ -32,7 +32,13 @@ def llm_pipeline(data):
     API_KEY = st.secrets["GEMINI_API_KEY"]
 
     # Initialize Gemini model
-    llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", google_api_key=API_KEY)
+    # llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", google_api_key=API_KEY)
+    llm = ChatGoogleGenerativeAI(
+    model="gemini-2.0-flash",
+    google_api_key=API_KEY,
+    convert_system_message_to_human=True  # 👈 This fixes the issue!
+)
+
 
     # Load question answering chain
     chain = load_qa_chain(llm, chain_type="stuff")
