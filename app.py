@@ -1,3 +1,9 @@
+import os
+os.environ["STREAMLIT_WATCHER_TYPE"] = "poll"
+
+import streamlit as st
+# ...rest of your imports
+
 import streamlit as st
 import os
 from backend import file_processing, llm_pipeline
