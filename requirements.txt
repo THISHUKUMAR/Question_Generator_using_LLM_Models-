@@ -2,10 +2,11 @@ streamlit==1.32.2
 langchain==0.1.13
 pdfplumber==0.10.3
 langchain-google-genai==0.0.6
-langchain-community==0.0.29  # or higher, but <0.1
-pypdf                        # <- Required by PyPDFLoader
+langchain-community==0.0.29
+pypdf
 PyPDF2==3.0.1
 pdfminer.six==20231228
 openai==1.14.3
 tiktoken==0.5.2
 pymupdf==1.23.21
+
