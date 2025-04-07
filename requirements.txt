@@ -2,7 +2,7 @@ streamlit==1.32.2
 langchain==0.1.13
 langchain-community==0.0.29
 langchain-google-genai==0.0.8
-google-generativeai==0.4.1
+google-generativeai==0.3.2
 PyMuPDF==1.23.26
 fpdf==1.7.2
 python-dotenv==1.0.1
