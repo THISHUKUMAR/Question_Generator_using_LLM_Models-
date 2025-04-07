@@ -6,7 +6,7 @@ from backend import file_processing, llm_pipeline
 st.set_page_config(page_title="PDF Q&A Generator", layout="centered")
 
 # App title
-st.title("📄 PDF Question Generator using Gemini")
+st.title("📄 Important Question Generator ")
 
 # File uploader
 uploaded_file = st.file_uploader("Upload a PDF file", type=["pdf"])
