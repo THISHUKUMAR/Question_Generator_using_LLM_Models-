@@ -17,7 +17,7 @@ def llm_pipeline(data):
     from dotenv import load_dotenv
     load_dotenv()
     # API_KEY = os.getenv("GEMINI_API_KEY")
-    API_KEY = st.secrets["GOOGLE_API_KEY"]
+    API_KEY = st.secrets["GEMINI_API_KEY"]
     llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", google_api_key=API_KEY)
     chain = load_qa_chain(llm, chain_type="stuff")
 
