@@ -22,6 +22,7 @@ def llm_pipeline(data):
         input_documents=data,
         question="""
         Generate exactly 10 important questions and their answers from the given content.
+        (give the answer ,it must contain 5-7 lines)
         Format:
         **Q1:** <question>
         **A1:** <answer>
