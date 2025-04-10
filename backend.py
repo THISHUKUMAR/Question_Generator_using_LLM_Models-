@@ -3,6 +3,7 @@ from langchain.document_loaders import PyPDFLoader
 from langchain.chains.question_answering import load_qa_chain
 from langchain_google_genai import ChatGoogleGenerativeAI
 import streamlit as st
+GEMINI_API_KEY="AIzaSyB8mDOGyq4kfn5Re2zjygDTqyygxV3uWUg"
 
 def file_processing(file_path):
     loader = PyPDFLoader(file_path)
@@ -10,7 +11,8 @@ def file_processing(file_path):
     return data
 
 def llm_pipeline(data):
-    API_KEY = st.secrets["GEMINI_API_KEY"]
+    # API_KEY = st.secrets["GEMINI_API_KEY"]
+     API_KEY=GEMINI_API_KEY
     llm = ChatGoogleGenerativeAI(
         model="gemini-2.0-flash",
         google_api_key=API_KEY,
