@@ -12,7 +12,7 @@ def file_processing(file_path):
 
 def llm_pipeline(data):
     # API_KEY = st.secrets["GEMINI_API_KEY"]
-     API_KEY=GEMINI_API_KEY
+    API_KEY=GEMINI_API_KEY
     llm = ChatGoogleGenerativeAI(
         model="gemini-2.0-flash",
         google_api_key=API_KEY,
