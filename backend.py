@@ -3,7 +3,7 @@ from langchain.document_loaders import PyPDFLoader
 from langchain.chains.question_answering import load_qa_chain
 from langchain_google_genai import ChatGoogleGenerativeAI
 import streamlit as st
-GEMINI_API_KEY="AIzaSyB8mDOGyq4kfn5Re2zjygDTqyygxV3uWUg"
+GEMINI_API_KEY="AIzaSyDbTr9ZzB3Ea5QjZOHjgI0zbwrns28F0QU"
 
 def file_processing(file_path):
     loader = PyPDFLoader(file_path)
