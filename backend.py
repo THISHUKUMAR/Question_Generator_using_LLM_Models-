@@ -3,7 +3,7 @@ from langchain.document_loaders import PyPDFLoader
 from langchain.chains.question_answering import load_qa_chain
 from langchain_google_genai import ChatGoogleGenerativeAI
 import streamlit as st
-GEMINI_API_KEY="AIzaSyDbTr9ZzB3Ea5QjZOHjgI0zbwrns28F0QU"
+GEMINI_API_KEY="AIzaSyDmT3bsCKY7XLZLEhW59sHRgfkEVE0SxpQ"
 
 def file_processing(file_path):
     loader = PyPDFLoader(file_path)
@@ -42,3 +42,4 @@ def llm_pipeline(data):
         return "⚠️ No Q&A pairs detected. The model may have returned unexpected output."
 
     return formatted_output
+
