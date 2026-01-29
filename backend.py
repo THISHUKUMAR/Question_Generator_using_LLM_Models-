@@ -14,7 +14,7 @@ def llm_pipeline(data):
     # API_KEY = st.secrets["GEMINI_API_KEY"]
     API_KEY=GEMINI_API_KEY
     llm = ChatGoogleGenerativeAI(
-        model="gemini-2.0-flash",
+        model="gemini-1.5-flash",
         google_api_key=API_KEY,
         convert_system_message_to_human=True
     )
@@ -42,5 +42,6 @@ def llm_pipeline(data):
         return "⚠️ No Q&A pairs detected. The model may have returned unexpected output."
 
     return formatted_output
+
 
 
